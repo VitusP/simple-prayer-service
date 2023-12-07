@@ -6,7 +6,7 @@ Service for generating daily prayer that will be displayed in a simple one-page 
 Services that will be used:
 ```
 - AWS VPC Endpoint
-- AWS API Gateway
+- AWS ALB
 - AWS ECS Fargate
 - AWS DynamoDB
 ```
