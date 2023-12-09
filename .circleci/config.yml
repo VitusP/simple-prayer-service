@@ -1,6 +1,17 @@
 version: 2
 
 jobs:
+  build:
+    docker:
+      - image: cimg/aws:2023.09
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: aws --version
+      - run:
+          name: build image
+          command: |
+            docker build -t simple-prayer-service .
   plan-apply:
     working_directory: /tmp/project
     docker:
@@ -65,6 +76,7 @@ workflows:
   version: 2
   plan_approve_apply:
     jobs:
+      - build
       - plan-apply
       - hold-apply:
           type: approval
