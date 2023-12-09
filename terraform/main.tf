@@ -14,7 +14,7 @@ terraform {
   backend "s3" {
     bucket = "simple-prayer-service-terraform-state"
     key    = "prod/terraform.tfstate"
-    region = local.region
+    region = "us-west-2"
   }
 }
 
