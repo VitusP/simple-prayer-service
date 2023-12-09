@@ -1,3 +1,7 @@
+locals {
+  aws_region = "us-west-2"
+}
+
 terraform {
   required_providers {
     aws = {
@@ -10,10 +14,10 @@ terraform {
   backend "s3" {
     bucket = "simple-prayer-service-terraform-state"
     key    = "prod/terraform.tfstate"
-    region = "us-west-2"
+    region = local.region
   }
 }
 
 provider "aws" {
-  region = "us-west-2"
+  region = local.region
 }
