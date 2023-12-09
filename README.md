@@ -9,4 +9,5 @@ Services that will be used:
 - AWS ALB
 - AWS ECS Fargate
 - AWS DynamoDB
+- AWS ECR
 ```
