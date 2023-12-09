@@ -51,7 +51,7 @@ jobs:
           command: |
             terraform -chdir=terraform init -input=false
       - run:
-          name: terrafomr plan
+          name: terraform plan
           command: |
             terraform -chdir=terraform plan -out tfapply
       - run:
@@ -92,7 +92,10 @@ workflows:
   version: 2
   plan_approve_apply:
     jobs:
-      - plan-apply
+      - build
+      - plan-apply:
+          requires:
+            - build
       - hold-apply:
           type: approval
           requires:
