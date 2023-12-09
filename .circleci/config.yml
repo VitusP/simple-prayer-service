@@ -47,7 +47,15 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: terraform
+          name: terraform init
+          command: |
+            terraform -chdir=terraform init -input=false
+      - run:
+          name: terrafomr plan
+          command: |
+            terraform -chdir=terraform plan -out tfapply
+      - run:
+          name: terraform apply
           command: |
             terraform -chdir=terraform apply -auto-approve tfapply
       - persist_to_workspace:
