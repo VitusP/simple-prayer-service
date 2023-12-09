@@ -15,11 +15,11 @@ jobs:
       - run:
           name: push to ECR
           command: |
-          $(aws ecr get-login --no-include-email --region us-west-2)
-          docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:latest
-          docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${CIRCLE_SHA1}
-          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:latest
-          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${CIRCLE_SHA1}
+            $(aws ecr get-login --no-include-email --region us-west-2)
+            docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:latest
+            docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${CIRCLE_SHA1}
+            docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:latest
+            docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${CIRCLE_SHA1}
   plan-apply:
     working_directory: /tmp/project
     docker:
