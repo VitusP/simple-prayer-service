@@ -92,10 +92,7 @@ workflows:
   version: 2
   plan_approve_apply:
     jobs:
-      - build
       - plan-apply:
-          requires:
-            - build
       - hold-apply:
           type: approval
           requires:
