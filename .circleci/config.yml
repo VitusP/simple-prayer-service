@@ -47,7 +47,15 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: terraform
+          name: terraform init
+          command: |
+            terraform -chdir=terraform init -input=false
+      - run:
+          name: terrafomr plan
+          command: |
+            terraform -chdir=terraform plan -out tfapply
+      - run:
+          name: terraform apply
           command: |
             terraform -chdir=terraform apply -auto-approve tfapply
       - persist_to_workspace:
@@ -84,10 +92,7 @@ workflows:
   version: 2
   plan_approve_apply:
     jobs:
-      - build
-      - plan-apply:
-          requires:
-            - build
+      - plan-apply
       - hold-apply:
           type: approval
           requires:
@@ -101,22 +106,22 @@ workflows:
           filters:
             branches:
               only: main
-      - plan-destroy:
-          requires:
-            - apply
-          filters:
-            branches:
-              only: main
-      - hold-destroy:
-          type: approval
-          requires:
-            - plan-destroy
-          filters:
-            branches:
-              only: main
-      - destroy:
-          requires:
-            - hold-destroy
-          filters:
-            branches:
-              only: main
+      # - plan-destroy:
+      #     requires:
+      #       - apply
+      #     filters:
+      #       branches:
+      #         only: main
+      # - hold-destroy:
+      #     type: approval
+      #     requires:
+      #       - plan-destroy
+      #     filters:
+      #       branches:
+      #         only: main
+      # - destroy:
+      #     requires:
+      #       - hold-destroy
+      #     filters:
+      #       branches:
+      #         only: main
