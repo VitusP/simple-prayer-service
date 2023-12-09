@@ -85,7 +85,7 @@ workflows:
   plan_approve_apply:
     jobs:
       - build
-      - plan-apply
+      - plan-apply:
           requires:
             - build
       - hold-apply:
