@@ -70,16 +70,31 @@ workflows:
           type: approval
           requires:
             - plan-apply
+          filters:
+            branches:
+              only: main
       - apply:
           requires:
             - hold-apply
+          filters:
+            branches:
+              only: main
       - plan-destroy:
           requires:
             - apply
+          filters:
+            branches:
+              only: main
       - hold-destroy:
           type: approval
           requires:
             - plan-destroy
+          filters:
+            branches:
+              only: main
       - destroy:
           requires:
             - hold-destroy
+          filters:
+            branches:
+              only: main
