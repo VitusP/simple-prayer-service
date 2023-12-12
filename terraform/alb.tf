@@ -44,8 +44,8 @@ resource "aws_alb_listener_rule" "http_listener_rule" {
     target_group_arn = aws_alb_target_group.service_target_group.arn
   }
   condition {
-    host_header {
-      values = ["*"]
+    path_pattern {
+      values = ["/*"]
     }
   }
 }
@@ -78,4 +78,15 @@ resource "aws_alb_target_group" "service_target_group" {
   }
 
   depends_on = [aws_alb.alb]
+}
+
+########################################################################################################################
+## Attach our ALB to target group
+########################################################################################################################
+resource "aws_lb_target_group_attachment" "tg_attachment" {
+  target_group_arn = aws_alb_target_group.service_target_group.arn
+  # attach the ALB to this target group
+  target_id = aws_alb.alb.arn
+  #  If the target type is alb, the targeted Application Load Balancer must have at least one listener whose port matches the target group port.
+  port = 80
 }
