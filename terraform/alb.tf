@@ -37,7 +37,7 @@ resource "aws_alb_listener" "alb_default_listener_http" {
 ########################################################################################################################
 
 resource "aws_alb_listener_rule" "http_listener_rule" {
-  listener_arn = aws_alb_listener.example.arn
+  listener_arn = aws_alb_listener.alb_default_listener_http.arn
 
   action {
     type             = "forward"
