@@ -63,8 +63,8 @@ resource "aws_main_route_table_association" "public_main" {
 ########################################################################################################################
 
 resource "aws_eip" "nat_gateway" {
-  count = var.az_count
-  vpc   = true
+  count  = var.az_count
+  domain = "vpc"
 
   tags = {
     Name     = "${var.namespace}-EIP-${count.index}-${var.environment}"
