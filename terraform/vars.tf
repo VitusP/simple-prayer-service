@@ -128,7 +128,7 @@ variable "memory" {
 
 variable "retention_in_days" {
   description = "Retention period for Cloudwatch logs"
-  default     = 7
+  default     = 5
   type        = number
 }
 
