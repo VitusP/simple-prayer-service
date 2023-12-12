@@ -45,7 +45,7 @@ resource "aws_alb_listener_rule" "http_listener_rule" {
   }
   condition {
     host_header {
-      values = []
+      values = ["*"]
     }
   }
 }
