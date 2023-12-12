@@ -8,13 +8,9 @@ variable "namespace" {
   type        = string
 }
 
-variable "domain_name" {
-  description = "Domain name of the service (like service.example.com)"
-  type        = string
-}
-
 variable "service_name" {
   description = "A Docker image-compatible name for the service"
+  default     = "simple-prayer-service"
   type        = string
 }
 
@@ -34,16 +30,6 @@ variable "environment" {
 ## AWS credentials
 ########################################################################################################################
 
-variable "aws_access_key_id" {
-  description = "AWS console access key"
-  type        = string
-}
-
-variable "aws_secret_access_key" {
-  description = "AWS console secret access key"
-  type        = string
-}
-
 variable "region" {
   description = "AWS region"
   default     = "us-west-2"
@@ -53,11 +39,6 @@ variable "region" {
 ########################################################################################################################
 ## Network variables
 ########################################################################################################################
-
-variable "tld_zone_id" {
-  description = "Top level domain hosted zone ID"
-  type        = string
-}
 
 variable "vpc_cidr_block" {
   description = "CIDR block for the VPC network"
@@ -77,6 +58,7 @@ variable "az_count" {
 
 variable "ecs_task_desired_count" {
   description = "How many ECS tasks should run in parallel"
+  default     = 1
   type        = number
 }
 
@@ -158,11 +140,6 @@ variable "ecr_force_delete" {
   description = "Forces deletion of Docker images before resource is destroyed"
   default     = true
   type        = bool
-}
-
-variable "hash" {
-  description = "Task hash that simulates a unique version for every new deployment of the ECS Task"
-  type        = string
 }
 
 ########################################################################################################################
