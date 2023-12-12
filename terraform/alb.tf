@@ -1,5 +1,5 @@
 ########################################################################################################################
-## Application Load Balancer in public subnets with HTTP default listener that redirects traffic to HTTPS
+## Application Load Balancer in public subnets with HTTP default listener that redirects traffic to HTTP
 ########################################################################################################################
 
 resource "aws_alb" "alb" {
@@ -9,6 +9,44 @@ resource "aws_alb" "alb" {
 
   tags = {
     Scenario = var.scenario
+  }
+}
+
+########################################################################################################################
+## Default HTTP listener
+########################################################################################################################
+
+resource "aws_alb_listener" "alb_default_listener_http" {
+  load_balancer_arn = aws_alb.alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      status_code  = "200"
+      message_body = "OK"
+    }
+  }
+}
+
+########################################################################################################################
+## HTTPS Listener Rule to only allow traffic with a valid custom origin header coming from CloudFront
+########################################################################################################################
+
+resource "aws_alb_listener_rule" "http_listener_rule" {
+  listener_arn = aws_alb_listener.alb_default_listener_http.arn
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.service_target_group.arn
+  }
+  condition {
+    host_header {
+      values = ["*"]
+    }
   }
 }
 
