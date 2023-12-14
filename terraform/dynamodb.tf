@@ -18,11 +18,6 @@ resource "aws_dynamodb_table" "simple-prayer-service-prayers" {
     type = "S"
   }
 
-  attribute {
-    name = "PrayerText"
-    type = "S"
-  }
-
   ttl {
     attribute_name = "TimeToExist"
     enabled        = false
