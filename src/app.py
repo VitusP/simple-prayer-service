@@ -4,29 +4,31 @@ import boto3
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello():
-    dynamodb = boto3.client('dynamodb')
+
+@app.route("/prayers")
+def get_prayer():
+    dynamodb = boto3.client("dynamodb")
 
     # Define the primary key value for the item you want to retrieve
     table_name = "prayers"
-    primary_key = {
-        'PrayerTitle': {'S': "Saint Michael Prayer"}
-    }
+    table = dynamodb.Table(table_name)
 
     # Perform a get_item on the DynamoDB table
-    response = dynamodb.get_item(
-        TableName=table_name,
-        Key=primary_key
-    )
+    response = table.get_item(Key={"PrayerTitle": "Saint Michael Prayer"})
 
     # Process the get_item response
-    item = response.get('Item')
+    item = response.get("Item")
     if item:
         # Process the retrieved item as needed
         return f"Item: {item}"
     else:
         return "Item not found"
 
-if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=3000)
+
+@app.route("/")
+def hello():
+    return "simple-prayer-service in ECS!"
+
+
+if __name__ == "__main__":
+    app.run(debug=False, host="0.0.0.0", port=3000)
