@@ -70,13 +70,13 @@ variable "ecs_task_min_count" {
 
 variable "ecs_task_max_count" {
   description = "How many ECS tasks should maximally run in parallel"
-  default     = 2
+  default     = 4
   type        = number
 }
 
 variable "ecs_task_deployment_minimum_healthy_percent" {
   description = "How many percent of a service must be running to still execute a safe deployment"
-  default     = 50
+  default     = 0
   type        = number
 }
 
