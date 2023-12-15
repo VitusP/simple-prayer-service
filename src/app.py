@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/prayers")
 def get_prayer():
-    dynamodb = boto3.client("dynamodb")
+    dynamodb = boto3.resource("dynamodb")
 
     # Define the primary key value for the item you want to retrieve
     table_name = "prayers"
