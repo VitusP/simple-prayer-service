@@ -57,6 +57,7 @@ jobs:
       - run:
           name: terraform apply
           command: |
+            terraform -chdir=terraform init -input=false
             terraform -chdir=terraform apply -auto-approve tfapply
       - persist_to_workspace:
           root: .
