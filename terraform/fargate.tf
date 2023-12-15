@@ -1,4 +1,12 @@
 ########################################################################################################################
+## Get latest image version
+########################################################################################################################
+
+data "local_file" "release_version" {
+  filename = "../release.version"
+}
+
+########################################################################################################################
 ## Creates an ECS Cluster
 ########################################################################################################################
 
@@ -27,7 +35,7 @@ resource "aws_ecs_task_definition" "default" {
   container_definitions = jsonencode([
     {
       name      = var.service_name
-      image     = "${aws_ecr_repository.simple_prayer_service.repository_url}:latest"
+      image     = "${aws_ecr_repository.simple_prayer_service.repository_url}:${data.local_file.release_version.content}"
       cpu       = var.cpu_units
       memory    = var.memory
       essential = true

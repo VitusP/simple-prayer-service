@@ -15,11 +15,11 @@ jobs:
       - run:
           name: push to ECR
           command: |
+            export RELEASE_VERSION=$(cat release.version)
+            echo ${RELEASE_VERSION}
             aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com
-            docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:latest
-            docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${CIRCLE_SHA1}
-            docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:latest
-            docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${CIRCLE_SHA1}
+            docker tag simple-prayer-service:latest ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${RELEASE_VERSION}
+            docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-west-2.amazonaws.com/simple-prayer-service:${RELEASE_VERSION}
   plan-apply:
     working_directory: /tmp/project
     docker:
