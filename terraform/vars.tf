@@ -2,6 +2,11 @@
 ## Service variables
 ########################################################################################################################
 
+variable "release_version" {
+  description = "Latest version from release.version file"
+  default     = file("../../release.version")
+}
+
 variable "namespace" {
   description = "Namespace for resource names"
   default     = "simple-prayer-service"

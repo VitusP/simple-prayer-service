@@ -27,7 +27,7 @@ resource "aws_ecs_task_definition" "default" {
   container_definitions = jsonencode([
     {
       name      = var.service_name
-      image     = "${aws_ecr_repository.simple_prayer_service.repository_url}:latest"
+      image     = "${aws_ecr_repository.simple_prayer_service.repository_url}:${var.release_version}"
       cpu       = var.cpu_units
       memory    = var.memory
       essential = true
