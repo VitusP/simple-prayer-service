@@ -17,12 +17,7 @@ resource "aws_dynamodb_table" "simple_prayer_service_prayers" {
     name = "PrayerCategory"
     type = "S"
   }
-
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = false
-  }
-
+  
   tags = {
     Name        = "simple-prayer-service-prayers-dynamodb"
     Environment = "production"
