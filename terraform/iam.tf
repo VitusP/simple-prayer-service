@@ -39,3 +39,37 @@ resource "aws_iam_role" "ecs_task_iam_role" {
     Scenario = var.scenario
   }
 }
+
+########################################################################################################################
+## IAM Policies for dynamodb
+########################################################################################################################
+
+data "aws_iam_policy_document" "dynamodb_policy" {
+  statement {
+    sid = "DynamodbPolicy"
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetItem",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem"
+    ]
+
+    resources = [
+      aws_dynamodb_table.simple_prayer_service_prayers.arn
+    ]
+  }
+}
+
+resource "aws_iam_policy" "dynamodb_policy" {
+  name   = "${var.namespace}-Dynamodb-TaskPolicy-${var.environment}"
+  policy = data.aws_iam_policy_document.dynamodb_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "dynamodb_policy" {
+  role       = aws_iam_role.ecs_task_iam_role.name
+  policy_arn = aws_iam_policy.dynamodb_policy.arn
+}
