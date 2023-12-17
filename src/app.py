@@ -1,28 +1,9 @@
 # app/app.py
 from flask import Flask
-import boto3
+from .controllers import prayer_bp
 
 app = Flask(__name__)
-
-
-@app.route("/prayers")
-def get_prayer():
-    dynamodb = boto3.resource("dynamodb")
-
-    # Define the primary key value for the item you want to retrieve
-    table_name = "prayers"
-    table = dynamodb.Table(table_name)
-
-    # Perform a get_item on the DynamoDB table
-    response = table.get_item(Key={"PrayerTitle": "Saint Michael Prayer"})
-
-    # Process the get_item response
-    item = response.get("Item")
-    if item:
-        # Process the retrieved item as needed
-        return f"Item: {item}"
-    else:
-        return "Item not found"
+app.register_blueprint(prayer_bp)
 
 
 @app.route("/")
