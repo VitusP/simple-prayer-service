@@ -11,7 +11,9 @@ def get_prayer():
     prayer = get_random_prayer()
     if prayer is not None:
         return (
-            jsonify({"PrayerTitle": prayer.get_title(), "PrayerText": prayer.get_text()}),
+            jsonify(
+                {"PrayerTitle": prayer.get_title(), "PrayerText": prayer.get_text()}
+            ),
             200,
         )
     else:

@@ -47,12 +47,12 @@ def get_random_prayer() -> Prayer:
         # Perform a get_item on the DynamoDB table
         count_response = table.scan(Select="COUNT")
         total_items = count_response["Count"]
+        logger.info(f"Total items scanned in prayer table: {total_items}")
 
         # Generate a random number within the range of total items
         random_index = random.randint(0, total_items - 1)
-        response = table.scan(
-            Limit=1, Select="ALL_ATTRIBUTES", Segment=random_index, TotalSegments=10
-        )
+        response = table.scan(Limit=1, Segment=random_index, TotalSegments=1)
+        logger.info(f"Scan Response in prayer table: {response.get('Items')}")
 
         # Process the get_item response
         item = response.get("Items", [])[0] if response.get("Items") else None
