@@ -51,7 +51,7 @@ def get_random_prayer() -> Prayer:
 
         # Generate a random number within the range of total items
         random_index = random.randint(0, total_items - 1)
-        response = table.scan(Limit=1, Segment=random_index, TotalSegments=1)
+        response = table.scan(Limit=1, Segment=random_index, TotalSegments=random_index+1)
         logger.info(f"Scan Response in prayer table: {response.get('Items')}")
 
         # Process the get_item response
