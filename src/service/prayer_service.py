@@ -11,10 +11,11 @@ PRAYER_TABLE = "prayers"
 PRAYER_TABLE_KEY = "PrayerTitle"
 REGION = "us-west-2"
 
+dynamodb = boto3.resource("dynamodb", region_name="us-west-2")
+
 
 def get_prayer(prayerTitle: str) -> Prayer:
     try:
-        dynamodb = boto3.resource("dynamodb")
 
         # Define the primary key value for the item you want to retrieve
         table = dynamodb.Table(PRAYER_TABLE)
@@ -39,7 +40,6 @@ def get_prayer(prayerTitle: str) -> Prayer:
 
 def get_random_prayer() -> Prayer:
     try:
-        dynamodb = boto3.resource("dynamodb")
 
         # Define the primary key value for the item you want to retrieve
         table = dynamodb.Table(PRAYER_TABLE)
