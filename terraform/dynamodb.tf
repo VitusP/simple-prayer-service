@@ -6,10 +6,10 @@ resource "aws_dynamodb_table" "simple_prayer_service_prayers" {
   name         = "prayers"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "PrayerTitle"
-  range_key    = "PrayerId"
+  range_key    = "PrayerCategory"
 
   attribute {
-    name = "PrayerTitle"
+    name = "PrayerCategory"
     type = "S"
   }
 
