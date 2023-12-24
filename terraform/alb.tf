@@ -77,5 +77,5 @@ resource "aws_alb_target_group" "service_target_group" {
     Scenario = var.scenario
   }
 
-  depends_on = [aws_alb.alb]
+  # depends_on = [aws_alb.alb]
 }
