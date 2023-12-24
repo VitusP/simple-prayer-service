@@ -1,54 +1,54 @@
-########################################################################################################################
-## Application Load Balancer in public subnets with HTTP default listener that redirects traffic to HTTP
-########################################################################################################################
+# ########################################################################################################################
+# ## Application Load Balancer in public subnets with HTTP default listener that redirects traffic to HTTP
+# ########################################################################################################################
 
-resource "aws_alb" "alb" {
-  name            = "${var.namespace}-ALB-${var.environment}"
-  security_groups = [aws_security_group.alb.id]
-  subnets         = aws_subnet.public.*.id
+# resource "aws_alb" "alb" {
+#   name            = "${var.namespace}-ALB-${var.environment}"
+#   security_groups = [aws_security_group.alb.id]
+#   subnets         = aws_subnet.public.*.id
 
-  tags = {
-    Scenario = var.scenario
-  }
-}
+#   tags = {
+#     Scenario = var.scenario
+#   }
+# }
 
-########################################################################################################################
-## Default HTTP listener
-########################################################################################################################
+# ########################################################################################################################
+# ## Default HTTP listener
+# ########################################################################################################################
 
-resource "aws_alb_listener" "alb_default_listener_http" {
-  load_balancer_arn = aws_alb.alb.arn
-  port              = 80
-  protocol          = "HTTP"
+# resource "aws_alb_listener" "alb_default_listener_http" {
+#   load_balancer_arn = aws_alb.alb.arn
+#   port              = 80
+#   protocol          = "HTTP"
 
-  default_action {
-    type = "fixed-response"
+#   default_action {
+#     type = "fixed-response"
 
-    fixed_response {
-      content_type = "text/plain"
-      status_code  = "200"
-      message_body = "OK"
-    }
-  }
-}
+#     fixed_response {
+#       content_type = "text/plain"
+#       status_code  = "200"
+#       message_body = "OK"
+#     }
+#   }
+# }
 
-########################################################################################################################
-## HTTPS Listener Rule to only allow traffic with a valid custom origin header coming from CloudFront
-########################################################################################################################
+# ########################################################################################################################
+# ## HTTPS Listener Rule to only allow traffic with a valid custom origin header coming from CloudFront
+# ########################################################################################################################
 
-resource "aws_alb_listener_rule" "http_listener_rule" {
-  listener_arn = aws_alb_listener.alb_default_listener_http.arn
+# resource "aws_alb_listener_rule" "http_listener_rule" {
+#   listener_arn = aws_alb_listener.alb_default_listener_http.arn
 
-  action {
-    type             = "forward"
-    target_group_arn = aws_alb_target_group.service_target_group.arn
-  }
-  condition {
-    path_pattern {
-      values = ["/*"]
-    }
-  }
-}
+#   action {
+#     type             = "forward"
+#     target_group_arn = aws_alb_target_group.service_target_group.arn
+#   }
+#   condition {
+#     path_pattern {
+#       values = ["/*"]
+#     }
+#   }
+# }
 
 ########################################################################################################################
 ## Target Group for our service
@@ -77,5 +77,5 @@ resource "aws_alb_target_group" "service_target_group" {
     Scenario = var.scenario
   }
 
-  depends_on = [aws_alb.alb]
+  # depends_on = [aws_alb.alb]
 }
